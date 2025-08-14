@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPS Business</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Times New Roman', serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background-color: #1a365d;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .agency-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .agency-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-bar {
+            background-color: #2d3748;
+            border-bottom: 3px solid #3182ce;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 2rem;
+        }
+
+        /* Updated nav buttons to classic style with no corners and gradient */
+        .nav-button {
+            background: linear-gradient(to bottom, #ffffff, #e2e8f0);
+            border: 1px solid #cbd5e0;
+            color: #2d3748;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Times New Roman', Times, serif;
+            transition: all 0.3s ease;
+            border-radius: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(to bottom, #f7fafc, #edf2f7);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .nav-button.active {
+            background: linear-gradient(to bottom, #3182ce, #2c5aa0);
+            color: white;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #3182ce;
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .rules-toc {
+            background-color: #f7fafc;
+            border: 2px solid #3182ce;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .rules-toc h3 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rules-toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .rules-toc a {
+            color: #3182ce;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            display: block;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .rules-toc a:hover {
+            background-color: #e2e8f0;
+            text-decoration: underline;
+        }
+
+        .leagues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .league-card {
+            background-color: #edf2f7;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #3182ce;
+            font-weight: 600;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.1rem;
+        }
+
+        .rule-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            border-left: 6px solid #38a169;
+            scroll-margin-top: 2rem;
+        }
+
+        .rule-title {
+            font-size: 1.6rem;
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #38a169;
+            padding-bottom: 0.5rem;
+        }
+
+        .rule-text {
+            margin-bottom: 1rem;
+            text-align: justify;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .rule-subsection {
+            margin-top: 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #cbd5e0;
+        }
+
+        .rule-subsection h4 {
+            color: #2d3748;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .agency-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .info-card {
+            background-color: #edf2f7;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 4px solid #3182ce;
+        }
+
+        .info-card h3 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .maintenance-notice {
+            text-align: center;
+            padding: 3rem;
+            background-color: #fed7d7;
+            border-radius: 6px;
+            border: 2px solid #fc8181;
+        }
+
+        .maintenance-notice h2 {
+            color: #c53030;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .brightness-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: rgba(26, 54, 93, 0.9);
+            border-radius: 25px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .brightness-label {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+        }
+
+        .brightness-slider {
+            width: 100px;
+            height: 5px;
+            background: #4a5568;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .brightness-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #63b3ed;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .brightness-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: #63b3ed;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .brightness-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            pointer-events: none;
+            z-index: 999;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Added login button and modal styles */
+        /* Updated login button to classic style */
+        .login-button {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: linear-gradient(to bottom, #ffffff, #e2e8f0);
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 10px 20px;
+            border-radius: 0;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-button:hover {
+            background: linear-gradient(to bottom, #f7fafc, #edf2f7);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+
+        .login-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .login-modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Enhanced login modal styles for more professional appearance */
+        .login-modal {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .login-modal-overlay.show .login-modal {
+            transform: scale(1);
+        }
+
+        .login-modal h2 {
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .login-tab.active {
+            color: #1a365d;
+            border-bottom-color: #3182ce;
+        }
+
+        .login-form {
+            display: none;
+        }
+
+        .login-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3182ce;
+        }
+
+        /* Added error and success message styles */
+        .form-input.error {
+            border-color: #e53e3e;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #38a169;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .password-requirements {
+            font-size: 0.75rem;
+            color: #4a5568;
+            margin-top: 0.25rem;
+        }
+
+        .requirement {
+            display: block;
+            margin: 0.125rem 0;
+        }
+
+        .requirement.valid {
+            color: #38a169;
+        }
+
+        .requirement.invalid {
+            color: #e53e3e;
+        }
+
+        /* Updated form buttons to classic style */
+        .form-button {
+            width: 100%;
+            padding: 0.65rem;
+            background: linear-gradient(to bottom, #ffffff, #e2e8f0);
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            border-radius: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-button:hover:not(:disabled) {
+            background: linear-gradient(to bottom, #f7fafc, #edf2f7);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .form-button:disabled {
+            background: linear-gradient(to bottom, #f7fafc, #e2e8f0);
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        /* Added loading spinner styles */
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .google-login {
+            background-color: #4285f4;
+            margin-bottom: 1rem;
+        }
+
+        .google-login:hover:not(:disabled) {
+            background-color: #357ae8;
+        }
+
+        /* Added terms and conditions styling */
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .terms-checkbox input {
+            margin-right: 0.5rem;
+            margin-top: 0.125rem;
+        }
+
+        .terms-link {
+            color: #3182ce;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        .user-profile {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background-color: white;
+            border: 2px solid #1a365d;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+        }
+
+        .user-profile.show {
+            display: flex;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-HYGM4dKN9uSmDHYZmfC4deCvI19Nrr.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .username {
+            font-weight: 600;
+            color: #1a365d;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: underline;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+            /* Added styles for create post functionality */
+            .create-post-section {
+                text-align: center;
+                margin-top: 30px;
+                padding: 20px;
+            }
+
+            .create-post-btn {
+                background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+                border: 1px solid #999;
+                padding: 8px 16px;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+                transition: all 0.2s;
+            }
+
+            .create-post-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-group input, .form-group textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                font-family: 'Times New Roman', serif;
+            }
+
+            .submit-btn {
+                background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+                border: 1px solid #999;
+                padding: 10px 20px;
+                cursor: pointer;
+                box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            }
+
+            .post-item {
+                border: 1px solid #ccc;
+                margin-bottom: 20px;
+                padding: 15px;
+                background: white;
+            }
+
+            .post-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .post-description {
+                margin-bottom: 10px;
+                line-height: 1.5;
+            }
+
+            .post-image {
+                max-width: 100%;
+                height: auto;
+                margin-top: 10px;
+            }
+
+            .post-meta {
+                font-size: 12px;
+                color: #666;
+                margin-top: 10px;
+            }
+
+            #imagePreview {
+                margin-top: 10px;
+            }
+
+            #imagePreview img {
+                max-width: 200px;
+                max-height: 200px;
+                border: 1px solid #ccc;
+            }
+
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+    <div id="mainContent">
+        <!-- Added brightness overlay and control elements -->
+        <div class="brightness-overlay" id="brightnessOverlay"></div>
+        <div class="brightness-control">
+            <span class="brightness-label">🌙</span>
+            <input type="range" min="0" max="70" value="0" class="brightness-slider" id="brightnessSlider">
+            <span class="brightness-label">☀️</span>
+        </div>
+
+        <!-- Added login button and user profile -->
+        <button class="login-button" id="loginButton" onclick="showLoginModal()">LOG IN</button>
+        <div class="user-profile" id="userProfile">
+            <div class="profile-pic" id="profilePic">U</div>
+            <div class="user-info">
+                <span class="username" id="username">User</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <header class="header">
+            <div class="header-content">
+                <div class="agency-title">MPS Business</div>
+                <div class="agency-subtitle">Official Business Management Platform</div>
+            </div>
+        </header>
+
+        <nav class="nav-bar">
+            <div class="nav-content">
+                <button class="nav-button active" onclick="showSection('leagues', this)">Leagues</button>
+                <button class="nav-button" onclick="showSection('agency', this)">Agency</button>
+                <button class="nav-button" onclick="showSection('rules', this)">Rules</button>
+                <button class="nav-button" onclick="showSection('news', this)">News</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <section id="leagues" class="content-section active">
+                <h1 class="section-title">Registered Leagues</h1>
+                <p>The following leagues are officially registered and monitored by MPS Business:</p>
+                <div class="leagues-grid">
+                    <div class="league-card">PRS</div>
+                    <div class="league-card">RFF</div>
+                    <div class="league-card">VRF</div>
+                    <div class="league-card">YPL</div>
+                    <div class="league-card">RPFL</div>
+                    <div class="league-card">VFL</div>
+                    <div class="league-card">CEF</div>
+                    <div class="league-card">VFF</div>
+                    <div class="league-card">VEF</div>
+                    <div class="league-card">OPSA</div>
+                    <div class="league-card">MPSL</div>
+                    <div class="league-card">VIFA</div>
+                    <div class="league-card">XIFA</div>
+                    <div class="league-card">VCF</div>
+                    <div class="league-card">RMF</div>
+                    <div class="league-card">VRO</div>
+                    <!-- Added new leagues as requested -->
+                    <div class="league-card">OFA</div>
+                    <div class="league-card">MSA</div>
+                    <div class="league-card">GCA</div>
+                    <div class="league-card">SAML</div>
+                    <div class="league-card">CBM</div>
+                    <div class="league-card">UML</div>
+                    <div class="league-card">VPL</div>
+                    <div class="league-card">UFA</div>
+                    <div class="league-card">WRM</div>
+                    <div class="league-card">TDR</div>
+                    <div class="league-card">EFF</div>
+                    <div class="league-card">CNM</div>
+                    <div class="league-card">FRM</div>
+                    <div class="league-card">MRS</div>
+                    <div class="league-card">BLM</div>
+                    <div class="league-card">PCM</div>
+                    <div class="league-card">MIFA</div>
+                    <div class="league-card">NSAL</div>
+                    <div class="league-card">SSA</div>
+                    <div class="league-card">CAM</div>
+                    <div class="league-card">IFF</div>
+                    <div class="league-card">SAFL</div>
+                    <div class="league-card">ORFA</div>
+                    <div class="league-card">PFA</div>
+                    <div class="league-card">CSM</div>
+                    <div class="league-card">RSA</div>
+                    <div class="league-card">FIRA</div>
+                    <div class="league-card">PFF</div>
+                </div>
+            </section>
+
+            <section id="agency" class="content-section">
+                <h1 class="section-title">About MPS Business</h1>
+                <div class="agency-info">
+                    <div class="info-card">
+                        <h3>Mission Statement</h3>
+                        <p>MPS Business serves as the primary management platform for virtual football leagues, ensuring fair play, competitive integrity, and standardized regulations across all registered leagues.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Core Functions</h3>
+                        <p>We monitor league operations, investigate violations, maintain blacklist protocols, classify league development levels, and ensure compliance with established regulations and standards.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Jurisdiction</h3>
+                        <p>Our authority extends to all registered virtual football leagues, their management structures, officiating bodies, and competitive frameworks within the virtual football ecosystem.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Contact Information</h3>
+                        <p>For official inquiries, violations reporting, or regulatory guidance, contact MPS Business through official channels. All communications are processed within 48-72 hours during standard business operations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rules" class="content-section">
+                <h1 class="section-title">Regulatory Framework</h1>
+                
+                <!-- Added table of contents for easy navigation -->
+                <div class="rules-toc">
+                    <h3>Table of Contents</h3>
+                    <ul>
+                        <li><a href="#blacklist-protocols">Section I: Blacklist Protocols</a></li>
+                        <li><a href="#youth-league-regulations">Section II: Youth League Regulations</a></li>
+                        <li><a href="#league-classification">Section III: League Classification System</a></li>
+                        <li><a href="#officiating-standards">Section IV: Officiating Standards</a></li>
+                        <li><a href="#financial-requirements">Section V: Financial Requirements</a></li>
+                        <li><a href="#compliance-enforcement">Section VI: Compliance & Enforcement</a></li>
+                        <li><a href="#appeals-process">Section VII: Appeals Process</a></li>
+                    </ul>
+                </div>
+                
+                <div id="blacklist-protocols" class="rule-section">
+                    <div class="rule-title">Section I: Blacklist Protocols</div>
+                    <div class="rule-text">
+                        When a league blacklists another league, users are automatically banned from the blacklisting league within 24 hours. The targeted league retains reciprocal blacklisting rights. Blacklists are only valid when supported by documented justification or legitimate cause. Blacklists without proper reasoning are classified as invalid and will not be enforced by regulatory oversight.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Documentation Requirements</h4>
+                        <div class="rule-text">All blacklist actions must be accompanied by detailed documentation including incident reports, evidence of violations, and formal justification statements.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Appeal Process</h4>
+                        <div class="rule-text">Blacklisted entities may appeal decisions through official channels within 72 hours of notification. Appeals are reviewed by independent regulatory panels.</div>
+                    </div>
+                </div>
+
+                <div id="youth-league-regulations" class="rule-section">
+                    <div class="rule-title">Section II: Youth League Regulations</div>
+                    <div class="rule-text">
+                        Leagues are authorized to establish Youth League divisions for developmental teams. For leagues with 750 members or fewer, managers from the main league are permitted to simultaneously manage teams in the Youth League. Leagues exceeding 750 members must maintain separate management structures between main and youth divisions.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Eligibility Criteria</h4>
+                        <div class="rule-text">Youth leagues must maintain separate registration systems and age verification protocols for all participating teams and management personnel.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Management Restrictions</h4>
+                        <div class="rule-text">Cross-management between main and youth divisions is strictly prohibited for leagues exceeding the 750-member threshold to prevent conflicts of interest.</div>
+                    </div>
+                </div>
+
+                <div id="league-classification" class="rule-section">
+                    <div class="rule-title">Section III: League Classification System</div>
+                    <div class="rule-text">
+                        Leagues with prize pools below 1,500 Robux in any competition are classified as Non-Developed Leagues. Leagues maintaining prize pools of 1,500 Robux or higher in at least one competition, while demonstrating sustained activity and financial stability (including developer and staff compensation), are classified as Developed Leagues.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Non-Developed League Criteria</h4>
+                        <div class="rule-text">Limited regulatory oversight, basic operational requirements, and simplified reporting structures apply to non-developed classifications.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Developed League Requirements</h4>
+                        <div class="rule-text">Enhanced oversight protocols, comprehensive financial reporting, and advanced operational standards are mandatory for developed league status.</div>
+                    </div>
+                </div>
+
+                <div id="officiating-standards" class="rule-section">
+                    <div class="rule-title">Section IV: Officiating Standards</div>
+                    <div class="rule-text">
+                        Leagues with corrupt referees or consistently poor match officiating are classified as having Corrupt officiating teams. Leagues maintaining professional officiating standards are classified as Advanced. Leagues exceeding 5,000 members with Advanced-level officiating, entertainment value, and competitive standards are classified as Competitive Leagues. All others are classified as Weaker Leagues or Side-Leagues.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Corruption Indicators</h4>
+                        <div class="rule-text">Biased decision-making, financial impropriety, match-fixing involvement, or consistent poor performance constitute grounds for corruption classification.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Advanced Standards</h4>
+                        <div class="rule-text">Professional training requirements, performance evaluations, and ethical compliance protocols define advanced officiating classifications.</div>
+                    </div>
+                </div>
+
+                <div id="financial-requirements" class="rule-section">
+                    <div class="rule-title">Section V: Financial Requirements</div>
+                    <div class="rule-text">
+                        All leagues must maintain transparent financial records and demonstrate fiscal responsibility. Regular audits may be conducted to ensure compliance with established financial standards and prize pool obligations.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Prize Pool Management</h4>
+                        <div class="rule-text">Prize pools must be secured in escrow accounts and distributed according to published schedules and competition results.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Staff Compensation</h4>
+                        <div class="rule-text">Developed leagues must demonstrate consistent payment of staff members, developers, and administrative personnel as evidence of financial stability.</div>
+                    </div>
+                </div>
+
+                <div id="compliance-enforcement" class="rule-section">
+                    <div class="rule-title">Section VI: Compliance & Enforcement</div>
+                    <div class="rule-text">
+                        MPS Business maintains authority to investigate violations, impose sanctions, and enforce regulatory compliance across all registered leagues. Enforcement actions may include warnings, fines, suspension of operations, or permanent deregistration.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Investigation Procedures</h4>
+                        <div class="rule-text">Formal investigations follow established protocols including evidence collection, witness interviews, and comprehensive review processes.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Sanctions Framework</h4>
+                        <div class="rule-text">Progressive disciplinary measures ensure proportionate responses to violations while maintaining operational continuity where possible.</div>
+                    </div>
+                </div>
+
+                <div id="appeals-process" class="rule-section">
+                    <div class="rule-title">Section VII: Appeals Process</div>
+                    <div class="rule-text">
+                        All regulatory decisions may be appealed through formal channels. Appeals must be submitted within specified timeframes and include comprehensive documentation supporting the challenge to regulatory determinations.
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>A. Filing Requirements</h4>
+                        <div class="rule-text">Appeals must include detailed grounds for challenge, supporting evidence, and formal request for review by independent panels.</div>
+                    </div>
+                    <div class="rule-subsection">
+                        <h4>B. Review Timeline</h4>
+                        <div class="rule-text">
+Appeals are processed within 14 business days of receipt, with decisions communicated through official channels to all relevant parties.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="news" class="content-section">
+                <h1 class="section-title">News & Updates</h1>
+                
+                <!-- Added posts container and create form button -->
+                <div id="postsContainer">
+                    <!-- Posts will be displayed here -->
+                </div>
+                
+                <div class="create-post-section">
+                    <button onclick="openCreatePostModal()" class="create-post-btn">CREATE FORM</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+        <!-- Added create post modal -->
+        <div id="createPostModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeCreatePostModal()">&times;</span>
+                <h2>Create New Post</h2>
+                <form id="createPostForm">
+                    <div class="form-group">
+                        <label for="postTitle">Title:</label>
+                        <input type="text" id="postTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postDescription">Description:</label>
+                        <textarea id="postDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="postImage">Attachment (PNG/JPG):</label>
+                        <input type="file" id="postImage" accept=".png,.jpg,.jpeg">
+                        <div id="imagePreview"></div>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Post</button>
+                </form>
+            </div>
+        </div>
+
+    <!-- Added login modal -->
+    <!-- Enhanced login modal with proper validation and professional features -->
+    <div class="login-modal-overlay" id="loginModal">
+        <div class="login-modal">
+            <button class="close-modal" onclick="closeLoginModal()">&times;</button>
+            <h2>MPS Business Portal</h2>
+            
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchTab('login')">Sign In</button>
+                <button class="login-tab" onclick="switchTab('signup')">Create Account</button>
+            </div>
+
+            <form class="login-form active" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username or Email Address</label>
+                    <input type="text" class="form-input" id="loginUsername" required autocomplete="username">
+                    <div class="error-message" id="loginUsernameError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="loginPassword" required autocomplete="current-password">
+                    <div class="error-message" id="loginPasswordError"></div>
+                </div>
+                <button type="button" class="form-button google-login" onclick="initiateGoogleLogin()">
+                    <span class="loading-spinner" id="googleLoginSpinner"></span>
+                    🔐 Continue with Google
+                </button>
+                <button type="submit" class="form-button" id="loginSubmitBtn">
+                    <span class="loading-spinner" id="loginSpinner"></span>
+                    Sign In to Account
+                </button>
+            </form>
+
+            <form class="login-form" id="signupForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="signupEmail" required autocomplete="email">
+                    <div class="error-message" id="signupEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Choose Username</label>
+                    <input type="text" class="form-input" id="signupUsername" required autocomplete="username">
+                    <div class="error-message" id="signupUsernameError"></div>
+                    <div class="success-message" id="signupUsernameSuccess"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Create Password</label>
+                    <input type="password" class="form-input" id="signupPassword" required autocomplete="new-password">
+                    <div class="password-requirements" id="passwordRequirements">
+                        <span class="requirement" id="lengthReq">• At least 8 characters</span>
+                        <span class="requirement" id="upperReq">• One uppercase letter</span>
+                        <span class="requirement" id="lowerReq">• One lowercase letter</span>
+                        <span class="requirement" id="numberReq">• One number</span>
+                    </div>
+                    <div class="error-message" id="signupPasswordError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-input" id="confirmPassword" required autocomplete="new-password">
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="termsCheckbox" required>
+                    <label for="termsCheckbox">I agree to the <span class="terms-link" onclick="showTerms()">Terms of Service</span> and <span class="terms-link" onclick="showPrivacy()">Privacy Policy</span></label>
+                </div>
+                <button type="button" class="form-button google-login" onclick="initiateGoogleSignup()">
+                    <span class="loading-spinner" id="googleSignupSpinner"></span>
+                    🔐 Sign Up with Google
+                </button>
+                <button type="submit" class="form-button" id="signupSubmitBtn">
+                    <span class="loading-spinner" id="signupSpinner"></span>
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionName, button) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.style.display = 'none');
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        function logout() {
+            document.getElementById('userProfile').style.display = 'none';
+            document.getElementById('loginButton').style.display = 'block';
+            localStorage.removeItem('currentUser');
+        }
+
+        // Brightness control
+        window.addEventListener('load', function() {
+            const brightnessSlider = document.getElementById('brightnessSlider');
+            const brightnessOverlay = document.getElementById('brightnessOverlay');
+            
+            if (brightnessSlider && brightnessOverlay) {
+                brightnessSlider.addEventListener('input', function() {
+                    const brightness = this.value;
+                    brightnessOverlay.style.backgroundColor = `rgba(0, 0, 0, ${brightness / 100})`;
+                });
+            }
+            
+            // Enhanced login system functionality
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const signupPassword = document.getElementById('signupPassword');
+            const signupUsername = document.getElementById('signupUsername');
+            
+            // Password strength validation
+            if (signupPassword) {
+                signupPassword.addEventListener('input', function() {
+                    const password = this.value;
+                    const requirements = {
+                        length: password.length >= 8,
+                        upper: /[A-Z]/.test(password),
+                        lower: /[a-z]/.test(password),
+                        number: /\d/.test(password)
+                    };
+                    
+                    document.getElementById('lengthReq').className = requirements.length ? 'requirement valid' : 'requirement';
+                    document.getElementById('upperReq').className = requirements.upper ? 'requirement valid' : 'requirement';
+                    document.getElementById('lowerReq').className = requirements.lower ? 'requirement valid' : 'requirement';
+                    document.getElementById('numberReq').className = requirements.number ? 'requirement valid' : 'requirement';
+                });
+            }
+            
+            // Username availability check
+            if (signupUsername) {
+                signupUsername.addEventListener('input', function() {
+                    const username = this.value;
+                    const errorDiv = document.getElementById('signupUsernameError');
+                    const successDiv = document.getElementById('signupUsernameSuccess');
+                    
+                    if (username.length < 3) {
+                        showError('signupUsernameError', 'Username must be at least 3 characters');
+                        successDiv.textContent = '';
+                        return;
+                    }
+                    
+                    // Simulate username availability check
+                    setTimeout(() => {
+                        const unavailableUsernames = ['admin', 'user', 'test', 'mps', 'business'];
+                        if (unavailableUsernames.includes(username.toLowerCase())) {
+                            showError('signupUsernameError', 'Username is already taken');
+                            successDiv.textContent = '';
+                        } else {
+                            errorDiv.textContent = '';
+                            successDiv.textContent = '✓ Username is available';
+                        }
+                    }, 500);
+                });
+            }
+            
+            // Login form submission
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('loginUsername').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    if (!username || !password) {
+                        showError('loginUsernameError', 'Please fill in all fields');
+                        return;
+                    }
+                    
+                    showLoading('loginSpinner', 'loginSubmitBtn');
+                    
+                    // Simulate login process
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('mpsUsers') || '{}');
+                        const user = users[username] || users[Object.keys(users).find(key => users[key].email === username)];
+                        
+                        if (user && user.password === password) {
+                            loginUser(user);
+                            closeLoginModal();
+                        } else {
+                            showError('loginPasswordError', 'Invalid username or password');
+                        }
+                        hideLoading('loginSpinner', 'loginSubmitBtn');
+                    }, 1500);
+                });
+            }
+            
+            // Signup form submission
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('signupEmail').value;
+                    const username = document.getElementById('signupUsername').value;
+                    const password = document.getElementById('signupPassword').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    const termsAccepted = document.getElementById('termsCheckbox').checked;
+                    
+                    clearFormErrors();
+                    
+                    // Validation
+                    if (!validateEmail(email)) {
+                        showError('signupEmailError', 'Please enter a valid email address');
+                        return;
+                    }
+                    
+                    if (username.length < 3) {
+                        showError('signupUsernameError', 'Username must be at least 3 characters');
+                        return;
+                    }
+                    
+                    if (!validatePassword(password)) {
+                        showError('signupPasswordError', 'Password does not meet requirements');
+                        return;
+                    }
+                    
+                    if (password !== confirmPassword) {
+                        showError('confirmPasswordError', 'Passwords do not match');
+                        return;
+                    }
+                    
+                    if (!termsAccepted) {
+                        showError('signupPasswordError', 'You must accept the Terms of Service');
+                        return;
+                    }
+                    
+                    showLoading('signupSpinner', 'signupSubmitBtn');
+                    
+                    // Simulate account creation
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('mpsUsers') || '{}');
+                        
+                        // Check if user already exists
+                        if (users[username] || Object.values(users).some(user => user.email === email)) {
+                            showError('signupEmailError', 'Account already exists with this email or username');
+                            hideLoading('signupSpinner', 'signupSubmitBtn');
+                            return;
+                        }
+                        
+                        // Create new user
+                        const newUser = {
+                            username: username,
+                            email: email,
+                            password: password,
+                            profilePic: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-HYGM4dKN9uSmDHYZmfC4deCvI19Nrr.png',
+                            createdAt: new Date().toISOString()
+                        };
+                        
+                        users[username] = newUser;
+                        localStorage.setItem('mpsUsers', JSON.stringify(users));
+                        
+                        loginUser(newUser);
+                        closeLoginModal();
+                        hideLoading('signupSpinner', 'signupSubmitBtn');
+                    }, 2000);
+                });
+            }
+        });
+        
+        function switchTab(tab) {
+            const loginTab = document.querySelector('.login-tab:first-child');
+            const signupTab = document.querySelector('.login-tab:last-child');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+            } else {
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
+            clearFormErrors();
+        }
+        
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        function validatePassword(password) {
+            return password.length >= 8 && 
+                   /[A-Z]/.test(password) && 
+                   /[a-z]/.test(password) && 
+                   /\d/.test(password);
+        }
+        
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = message;
+            }
+        }
+        
+        function clearFormErrors() {
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(element => element.textContent = '');
+        }
+        
+        function showLoading(spinnerId, buttonId) {
+            const spinner = document.getElementById(spinnerId);
+            const button = document.getElementById(buttonId);
+            if (spinner) spinner.style.display = 'inline-block';
+            if (button) button.disabled = true;
+        }
+        
+        function hideLoading(spinnerId, buttonId) {
+            const spinner = document.getElementById(spinnerId);
+            const button = document.getElementById(buttonId);
+            if (spinner) spinner.style.display = 'none';
+            if (button) button.disabled = false;
+        }
+        
+        function loginUser(user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            document.getElementById('loginButton').style.display = 'none';
+            document.getElementById('userProfile').style.display = 'flex';
+            document.getElementById('username').textContent = user.username;
+            document.getElementById('profilePic').innerHTML = `<img src="${user.profilePic}" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+        }
+        
+        function initiateGoogleLogin() {
+            showLoading('googleLoginSpinner', null);
+            
+            // Show Google login form inline instead of popup
+            const googleForm = document.createElement('div');
+            googleForm.innerHTML = `
+                <div style="margin: 1rem 0; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
+                    <h4 style="margin: 0 0 1rem 0; color: #1a365d;">Sign in with Google</h4>
+                    <input type="email" placeholder="Enter your Google email" id="googleEmailInput" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" onclick="completeGoogleAuth(document.getElementById('googleEmailInput').value)" style="flex: 1; padding: 0.5rem; background: #4285f4; color: white; border: none; border-radius: 4px; cursor: pointer;">Continue</button>
+                        <button type="button" onclick="cancelGoogleAuth()" style="flex: 1; padding: 0.5rem; background: #ccc; color: black; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            const loginForm = document.getElementById('loginForm');
+            loginForm.appendChild(googleForm);
+            
+            hideLoading('googleLoginSpinner', null);
+        }
+        
+        function cancelGoogleAuth() {
+            const googleForm = document.querySelector('#loginForm > div:last-child');
+            if (googleForm) {
+                googleForm.remove();
+            }
+        }
+        
+        function completeGoogleAuth(email) {
+            if (!email || !validateEmail(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('mpsUsers') || '{}');
+            let user = Object.values(users).find(u => u.email === email);
+            
+            if (!user) {
+                // Create new Google user
+                const username = email.split('@')[0] + '_google';
+                user = {
+                    username: username,
+                    email: email,
+                    profilePic: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-HYGM4dKN9uSmDHYZmfC4deCvI19Nrr.png',
+                    isGoogleUser: true,
+                    createdAt: new Date().toISOString()
+                };
+                users[username] = user;
+                localStorage.setItem('mpsUsers', JSON.stringify(users));
+            }
+            
+            loginUser(user);
+            closeLoginModal();
+        }
+        
+        function initiateGoogleSignup() {
+            initiateGoogleLogin(); // Same process for signup
+        }
+
+            function openCreatePostModal() {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    alert('You must be logged in to create a post.');
+                    return;
+                }
+                document.getElementById('createPostModal').style.display = 'block';
+            }
+
+            function closeCreatePostModal() {
+                document.getElementById('createPostModal').style.display = 'none';
+                document.getElementById('createPostForm').reset();
+                document.getElementById('imagePreview').innerHTML = '';
+            }
+
+            // Handle image preview
+            document.getElementById('postImage').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('imagePreview');
+                
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = '';
+                }
+            });
+
+            // Handle form submission
+            document.getElementById('createPostForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    alert('You must be logged in to create a post.');
+                    return;
+                }
+
+                const title = document.getElementById('postTitle').value;
+                const description = document.getElementById('postDescription').value;
+                const imageFile = document.getElementById('postImage').files[0];
+
+                const post = {
+                    id: Date.now(),
+                    title: title,
+                    description: description,
+                    author: currentUser.username,
+                    date: new Date().toLocaleDateString(),
+                    image: null
+                };
+
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        post.image = e.target.result;
+                        savePost(post);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    savePost(post);
+                }
+            });
+
+            function savePost(post) {
+                let posts = JSON.parse(localStorage.getItem('newsPosts')) || [];
+                posts.unshift(post);
+                localStorage.setItem('newsPosts', JSON.stringify(posts));
+                
+                closeCreatePostModal();
+                displayPosts();
+                alert('Post created successfully!');
+            }
+
+            function displayPosts() {
+                const posts = JSON.parse(localStorage.getItem('newsPosts')) || [];
+                const container = document.getElementById('postsContainer');
+                
+                if (posts.length === 0) {
+                    container.innerHTML = `
+                        <div class="maintenance-notice">
+                            <h2>No Posts Yet</h2>
+                            <p>Be the first to create a news post! Click the CREATE FORM button below.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = posts.map(post => `
+                    <div class="post-item">
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-description">${post.description}</div>
+                        ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : ''}
+                        <div class="post-meta">By ${post.author} on ${post.date}</div>
+                    </div>
+                `).join('');
+            }
+
+        window.addEventListener('load', function() {
+            // Check for existing user
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                loginUser(JSON.parse(currentUser));
+            }
+                displayPosts();
+        });
+    </script>
+</body>
+</html>
