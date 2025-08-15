@@ -1496,39 +1496,76 @@ Appeals are processed within 14 business days of receipt, with decisions communi
                 }
             });
 
-            function savePost(post) {
-                let posts = JSON.parse(localStorage.getItem('newsPosts')) || [];
-                posts.unshift(post);
-                localStorage.setItem('newsPosts', JSON.stringify(posts));
-                
-                closeCreatePostModal();
-                displayPosts();
-                alert('Post created successfully!');
-            }
+function savePost(post) {
+    // Save to localStorage with simulated shared posts
+    let posts = JSON.parse(localStorage.getItem('newsPosts')) || getDefaultPosts();
+    posts.unshift(post);
+    localStorage.setItem('newsPosts', JSON.stringify(posts));
+    closeCreatePostModal();
+    displayPosts();
+    alert('Post created successfully!');
+}
 
-            function displayPosts() {
-                const posts = JSON.parse(localStorage.getItem('newsPosts')) || [];
-                const container = document.getElementById('postsContainer');
-                
-                if (posts.length === 0) {
-                    container.innerHTML = `
-                        <div class="maintenance-notice">
-                            <h2>No Posts Yet</h2>
-                            <p>Be the first to create a news post! Click the CREATE FORM button below.</p>
-                        </div>
-                    `;
-                    return;
-                }
+function getDefaultPosts() {
+    // Default posts that simulate shared content
+    return [
+        {
+            id: 1,
+            title: "Welcome to MPS Business News",
+            description: "Stay updated with the latest league announcements and regulatory updates from the MPS Business platform.",
+            author: "MPS Admin",
+            date: "1/15/2025",
+            image: null
+        },
+        {
+            id: 2,
+            title: "New League Registration Guidelines",
+            description: "Updated guidelines for league registration are now in effect. All leagues must comply with the new standards by the end of the month.",
+            author: "Regulatory Team",
+            date: "1/14/2025",
+            image: null
+        }
+    ];
+}
 
-                container.innerHTML = posts.map(post => `
-                    <div class="post-item">
-                        <div class="post-title">${post.title}</div>
-                        <div class="post-description">${post.description}</div>
-                        ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : ''}
-                        <div class="post-meta">By ${post.author} on ${post.date}</div>
-                    </div>
-                `).join('');
-            }
+function loadSharedPosts() {
+    // Load posts from localStorage with default posts
+    let posts = JSON.parse(localStorage.getItem('newsPosts'));
+    if (!posts) {
+        posts = getDefaultPosts();
+        localStorage.setItem('newsPosts', JSON.stringify(posts));
+    }
+    window.sharedPosts = posts;
+    displaySharedPosts();
+}
+
+function displaySharedPosts() {
+    const posts = window.sharedPosts || [];
+    const container = document.getElementById('postsContainer');
+    
+    if (posts.length === 0) {
+        container.innerHTML = `
+            <div class="maintenance-notice">
+                <h2>No Posts Yet</h2>
+                <p>Be the first to create a news post! Click the CREATE FORM button below.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = posts.map(post => `
+        <div class="post-item">
+            <div class="post-title">${post.title}</div>
+            <div class="post-description">${post.description}</div>
+            ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : ''}
+            <div class="post-meta">By ${post.author} on ${post.date}</div>
+        </div>
+    `).join('');
+}
+
+function displayPosts() {
+    loadSharedPosts();
+}
 
         window.addEventListener('load', function() {
             // Check for existing user
@@ -1536,7 +1573,10 @@ Appeals are processed within 14 business days of receipt, with decisions communi
             if (currentUser) {
                 loginUser(JSON.parse(currentUser));
             }
-                displayPosts();
+    
+    loadSharedPosts();
+    
+            
         });
     </script>
 </body>
